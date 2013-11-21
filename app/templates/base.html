@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><a href="{{ url_for('index')}}">nitro</a></h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            {% for msg in get_flashed_messages()  %}
+                <div class="alert alert-info alert-dismisable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{msg}}</div>
+            {% endfor %}
+            
+            
+            {% for error in errors  %}
+                <div class="alert alert-danger alert-dismisable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{error}}</div>
+            {% endfor %}
+        </div>
+
+        
+        <div class="row">
+            <div class="col-lg-4">
+                {% if not session.get('logged_in') %}
+                    {% include 'shards/login_form.html' %}
+                {% else %}
+                    {% include 'shards/post_form.html' %}
+                    <br>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="static/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
